@@ -36,7 +36,7 @@ class Program
     {
         //afegim un comentari
 
-        //blab bla
+        //bla bla bla
         Console.Write("Introdueix la primera data: ");
         DateTime data1 = DateTime.Parse(Console.ReadLine() ?? "");
 
