@@ -34,6 +34,7 @@ class Program
 
     static void CompararFechas()
     {
+        //afegim un comentari
         Console.Write("Introdueix la primera data: ");
         DateTime data1 = DateTime.Parse(Console.ReadLine() ?? "");
 
