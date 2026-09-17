@@ -1,10 +1,14 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System;
+using System.Text;
+using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Net.Http;
 
 class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
-        //HelloWorld();
+        HelloWorld();
         CompararFechas();
     }
 
@@ -104,5 +108,6 @@ class Program
     }
 
 }
+
 
 
