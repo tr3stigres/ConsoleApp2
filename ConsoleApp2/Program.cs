@@ -9,29 +9,73 @@ class Program
     public static async Task Main()
     {
         HelloWorld();
-        CompararFechas();
+        //CompararFechas();
     }
 
     static void HelloWorld()
     {
-        //nombre
-        Console.WriteLine("¿Cómo te llamas?");
-        string nombre = Console.ReadLine() ?? "";
-        Console.WriteLine($"Hola, {nombre}");
 
-        //año de nacimiento
-        Console.WriteLine("Año de nacimiento:");
-        int anioNacimiento = int.Parse(Console.ReadLine() ?? "");
+        string nombre = DemanarNom();
+        int anioNacimiento = DemanarAny();
+        int edadAproximada = CalculEdat(anioNacimiento);
+        decimal precio = DemanarPreu();        
+        decimal precioFinal = CalculPreuFinal(precio);
+        MostarResultat(nombre, edadAproximada, precioFinal);        
+    }
 
-        // insertar pecio
-        Console.WriteLine("Precio del producto:");
-        decimal precio = decimal.Parse(Console.ReadLine() ?? "");
 
-        int anioActual = DateTime.Now.Year;
-        int edadAproximada = anioActual - anioNacimiento;
-        decimal precioFinal = precio * 0.90m;  //calculo del 10%
+    static string DemanarNom() 
+    {
+        string nombre = "";
+        Console.Write("Com et dius? ");
+        string? resposta = Console.ReadLine() ?? "";
+        if (resposta != null)
+            nombre = resposta;
 
-        // respuesta
+        return nombre;
+
+    }
+
+    static int DemanarAny()
+    {
+
+        int anio = 0;
+
+        do
+        {
+            Console.Write("Any de naixament: ");
+            string? resposta = Console.ReadLine();
+            if (!int.TryParse(resposta, out anio))
+            {
+                Console.WriteLine("La resposta ha de ser un número sencer");
+                continue;
+            }
+
+            break;
+
+        } while (true);
+
+        return anio;
+    }
+
+    static decimal DemanarPreu()
+    {        
+        Console.Write("Preu del producte: ");
+        return decimal.Parse(Console.ReadLine() ?? "");        
+    }
+
+    static int CalculEdat(int anioNacimiento)
+    {
+        return DateTime.Now.Year - anioNacimiento;
+    }
+
+    static decimal CalculPreuFinal(decimal precio)
+    {
+        return precio * 0.90m;  //calculo del 10%
+    }
+
+    static void MostarResultat(string nombre, int edadAproximada, decimal precioFinal)
+    {
         Console.WriteLine($"{nombre}: edad aprox. {edadAproximada} años");
         Console.WriteLine($"Precio: {precioFinal:F2}");
     }
