@@ -1,15 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Net.Http;
-
-class Program
+﻿class Program
 {
     public static async Task Main()
     {
         HelloWorld();
-        //CompararFechas();
+        CompararFechas();
     }
 
     static void HelloWorld()
@@ -23,6 +17,14 @@ class Program
         MostarResultat(nombre, edadAproximada, precioFinal);        
     }
 
+    static void CompararFechas()
+    {
+
+        DateTime data1 = IntroduirData("Introdueix la primera data:");
+        DateTime data2 = IntroduirData("Introdueix la segona data:");
+        int comparacio = CompararDatas(data1, data2);
+        MostrarResposta(comparacio, data1, data2);
+    }
 
     static string DemanarNom() 
     {
@@ -80,48 +82,61 @@ class Program
         Console.WriteLine($"Precio: {precioFinal:F2}");
     }
 
-    static void CompararFechas()
+    static DateTime IntroduirData(string pregunta)
     {
-        //afegim un comentari
+        DateTime resultat = DateTime.Now;
 
-        //bla bla bla
-        Console.Write("Introdueix la primera data: ");
-        DateTime data1 = DateTime.Parse(Console.ReadLine() ?? "");
+        do
+        {
+            Console.Write($"{pregunta} ");
+            string? resposta = Console.ReadLine();
+            if (!DateTime.TryParse(resposta, out resultat))
+            {
+                Console.WriteLine("La resposta ha de ser una data");
+                continue;
+            }
+           
+            break;
 
-        Console.Write("Introdueix la segona data: ");
-        DateTime data2 = DateTime.Parse(Console.ReadLine() ?? "");
+        } while (true);
 
+        return resultat;
+
+    }
+
+    static int CompararDatas (DateTime data1, DateTime data2)
+    {
         int anyData1 = data1.Year;
         int anyData2 = data2.Year;
 
         if (anyData1 < anyData2)
         {
 
-            Console.WriteLine($"{data1} es anterior a {data2}");
+            return 2;
         }
         else
         {
             if (anyData1 > anyData2)
             {
 
-                Console.WriteLine($"{data1} es posterior a {data2}");
+                return 1;
             }
             else
             {
                 int mesData1 = data1.Month;
                 int mesData2 = data2.Month;
-                
+
                 if (mesData1 < mesData2)
                 {
 
-                    Console.WriteLine($"{data1} es anterior a {data2}");
+                    return 2;
                 }
                 else
                 {
                     if (mesData1 > mesData2)
                     {
 
-                        Console.WriteLine($"{data1} es posterior a {data2}");
+                        return 1;
                     }
                     else
                     {
@@ -131,24 +146,37 @@ class Program
                         if (diaData1 < diaData2)
                         {
 
-                            Console.WriteLine($"{data1} es anterior a {data2}");
+                            return 2;
                         }
                         else
                         {
                             if (diaData1 > diaData2)
                             {
 
-                                Console.WriteLine($"{data1} es posterior a {data2}");
+                                return 1;
                             }
                             else
                             {
-                                Console.WriteLine("Les dates son idètiques");
+                                return 0;
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    static void MostrarResposta(int comparacio, DateTime data1, DateTime data2)
+    {
+        string resposta = comparacio switch
+        {
+            0 => "Les dates son idètiques",
+            1 => $"{data1} es posterior a {data2}",
+            2 => $"{data1} es anterior a {data2}",
+            _ => "No hi ha solució"
+        };
+
+        Console.Write(resposta);
     }
 
 }
